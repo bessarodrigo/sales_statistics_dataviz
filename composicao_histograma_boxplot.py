@@ -4,10 +4,20 @@ import seaborn as sns
 import os
 
 def composicao_histograma_boxplot(dataframe, coluna, intervalos="auto", titulo="Título do Gráfico", nome_arquivo="distribuicao.png", salvar=False):
+    # Definir o caminho para a pasta 'images'
     pasta_imagens = os.path.join(os.getcwd(), "images")
-    if salvar and not os.path.exists(pasta_imagens):
-        os.makedirs(pasta_imagens)
     
+    # Garantir que a pasta seja criada apenas se necessário
+    if salvar:
+        if not os.path.exists(pasta_imagens):
+            try:
+                os.makedirs(pasta_imagens)
+                print(f"Pasta criada em: {pasta_imagens}")
+            except Exception as e:
+                print(f"Erro ao criar a pasta {pasta_imagens}: {e}")
+                return  # Interromper a execução se houver erro na criação da pasta
+    
+    # Criação dos gráficos
     fig, (ax1, ax2) = plt.subplots(
         nrows=2, 
         ncols=1, 
@@ -31,7 +41,7 @@ def composicao_histograma_boxplot(dataframe, coluna, intervalos="auto", titulo="
     sns.histplot(data=dataframe, x=coluna, kde=True, bins=intervalos, ax=ax2)
 
     for ax in (ax1, ax2):
-        ax.grid(True, linestyle="--", color="gray", alpha=0.2)
+        ax.grid(True, linestyle="--", color="gray", alpha=0.5)
         ax.set_axisbelow(True)
         for spine in ax.spines.values():
             spine.set_visible(False)
@@ -46,9 +56,13 @@ def composicao_histograma_boxplot(dataframe, coluna, intervalos="auto", titulo="
     
     fig.suptitle(titulo, fontsize=14, fontweight="bold", color="Gray")
     
+    # Salvar o gráfico se 'salvar' for True
     if salvar:
         caminho_arquivo = os.path.join(pasta_imagens, nome_arquivo)
-        plt.savefig(caminho_arquivo, dpi=300, bbox_inches="tight")
-        print(f"Gráfico salvo em: {caminho_arquivo}")
+        try:
+            plt.savefig(caminho_arquivo, dpi=300, bbox_inches="tight")
+            print(f"Gráfico salvo em: {caminho_arquivo}")
+        except Exception as e:
+            print(f"Erro ao salvar o arquivo {caminho_arquivo}: {e}")
 
     plt.show()
