@@ -31,7 +31,7 @@ def composicao_histograma_boxplot(dataframe, coluna, intervalos="auto", titulo="
     sns.histplot(data=dataframe, x=coluna, kde=True, bins=intervalos, ax=ax2)
 
     for ax in (ax1, ax2):
-        ax.grid(True, linestyle="--", color="gray", alpha=0.5)
+        ax.grid(True, linestyle="--", color="gray", alpha=0.2)
         ax.set_axisbelow(True)
         for spine in ax.spines.values():
             spine.set_visible(False)
