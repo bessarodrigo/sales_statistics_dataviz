@@ -1,4 +1,4 @@
-# Visualização de Estatísticas de Vendas
+# Visualização de Estatísticas de Vendas (Faturamento Total)
 
 Projeto que apresenta uma visualização agrupada de gráficos muito utilizados em análises estatísticas.
 
